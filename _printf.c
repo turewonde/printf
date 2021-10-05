@@ -13,15 +13,15 @@ int _printf(const char *format, ...)
 		{"c", wonde_char},
 		{"s", wonde_string},
 		{"%", wonde_percent},
-		{"d", wonde_integer},
-		{"i", wonde_integer},
-		{"b", wonde_binary},
-		{"r", wonde_reversed},
+		{"d", print_integer},
+		{"i", print_integer},
+		{"b", print_binary},
+		{"r", print_reversed},
 		{"R", rot13},
 		{"u", unsigned_integer},
-		{"o", wonde_octal},
-		{"x", wonde_hex},
-		{"X", wonde_heX},
+		{"o", print_octal},
+		{"x", print_hex},
+		{"X", print_heX},
 		{NULL, NULL}
 	};
 	va_list arg_list;
