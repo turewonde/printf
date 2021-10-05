@@ -1,72 +1,34 @@
 #include "main.h"
+#include <stdlib.h>
+
 /**
- * wonde_char - Prints character
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
- */
-int wonde_char(va_list list)
+ * print_c - Print a character.
+ * @arg: Char to be printed.
+ * Return: On success 1.
+ * On error -1.
+ **/
+
+int print_c(va_list arg)
 {
-	_putchar(va_arg(list, int));
-	return (1);
+	char c = va_arg(arg, int);
+
+	return (_putchar(c));
 }
 
 /**
- * wonde_string - Prints a string
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
+ * print_s - Print a string.
+ * @arg: String address.
+ * Return: integer.
  */
-int wonde_string(va_list list)
+int print_s(va_list arg)
 {
-	int i;
-	char *str;
+	char *str = va_arg(arg, char *);
+	int i = 0;
 
-	str = va_arg(list, char *);
 	if (str == NULL)
 		str = "(null)";
-	for (i = 0; str[i] != '\0'; i++)
+
+	for (; str[i]; i++)
 		_putchar(str[i]);
 	return (i);
-}
-
-/**
- * wonde_percent - Prints a percent symbol
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
- */
-int wonde_percent(__attribute__((unused))va_list list)
-{
-	_putchar('%');
-	return (1);
-}
-
-/**
- * print_integer - Prints an integer
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
- */
-int print_integer(va_list list)
-{
-	int num_length;
-
-	num_length = print_number(list);
-	return (num_length);
-}
-
-/**
- * unsigned_integer - Prints Unsigned integers
- * @list: List of all of the argumets
- * Return: a count of the numbers
- */
-int unsigned_integer(va_list list)
-{
-	unsigned int num;
-
-	num = va_arg(list, unsigned int);
-
-	if (num == 0)
-		return (print_unsgined_number(num));
-
-	if (num < 1)
-		return (-1);
-	return (print_unsgined_number(num));
 }
