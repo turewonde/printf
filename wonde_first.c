@@ -1,49 +1,72 @@
 #include "main.h"
-#include <unistd.h>
-#include <stdio.h>
-
 /**
- * wonde_char - writes the character c to stdout
- * @arg: argument
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * print_char - Prints character
+ * @list: list of arguments
+ * Return: Will return the amount of characters printed.
  */
-
-int wonde_char(va_list arg)
+int wonde_char(va_list list)
 {
-	return (_putchar(va_arg(arg, int)));
+	_write_char(va_arg(list, int));
+	return (1);
 }
 
 /**
- * wonde_str - prints a string with a `s` (lower case) specifier
- * @arg: argument
- * Return: number of character printed
+ * print_string - Prints a string
+ * @list: list of arguments
+ * Return: Will return the amount of characters printed.
  */
-
-int wonde_str(va_list arg)
+int wonde_string(va_list list)
 {
-int i;
-char *str = va_arg(arg, char*);
+	int i;
+	char *str;
 
-if (str == NULL)
-	str = "(null)";
-else if (*str == '\0')
-	return (-1);
-
-for (i = 0; str[i]; i++)
-	_putchar(str[i]);
-
-return (i);
+	str = va_arg(list, char *);
+	if (str == NULL)
+		str = "(null)";
+	for (i = 0; str[i] != '\0'; i++)
+		_write_char(str[i]);
+	return (i);
 }
 
 /**
- * wonde_percent - Prints a percent symbol
+ * print_percent - Prints a percent symbol
  * @list: list of arguments
  * Return: Will return the amount of characters printed.
  */
 int wonde_percent(__attribute__((unused))va_list list)
 {
-	_putchar('%');
+	_write_char('%');
 	return (1);
+}
+
+/**
+ * print_integer - Prints an integer
+ * @list: list of arguments
+ * Return: Will return the amount of characters printed.
+ */
+int wonde_integer(va_list list)
+{
+	int num_length;
+
+	num_length = print_number(list);
+	return (num_length);
+}
+
+/**
+ * unsigned_integer - Prints Unsigned integers
+ * @list: List of all of the argumets
+ * Return: a count of the numbers
+ */
+int unsigned_integer(va_list list)
+{
+	unsigned int num;
+
+	num = va_arg(list, unsigned int);
+
+	if (num == 0)
+		return (print_unsgined_number(num));
+
+	if (num < 1)
+		return (-1);
+	return (print_unsgined_number(num));
 }
