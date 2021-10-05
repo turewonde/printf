@@ -24,7 +24,7 @@ int _printf(const char *format, ...)
 		return (-1);
 
 	va_start(arg_list, format);
-	printed_values = parser(format, f_list, arg_list);
+	printed_values = wonde(format, f_list, arg_list);
 	va_end(arg_list);
 	return (printed_values);
 }
