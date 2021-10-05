@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * print_char - Prints character
+ * wonde_char - Prints character
  * @list: list of arguments
  * Return: Will return the amount of characters printed.
  */
@@ -11,7 +11,7 @@ int wonde_char(va_list list)
 }
 
 /**
- * print_string - Prints a string
+ * wonde_string - Prints a string
  * @list: list of arguments
  * Return: Will return the amount of characters printed.
  */
@@ -29,7 +29,7 @@ int wonde_string(va_list list)
 }
 
 /**
- * print_percent - Prints a percent symbol
+ * wonde_percent - Prints a percent symbol
  * @list: list of arguments
  * Return: Will return the amount of characters printed.
  */
@@ -44,7 +44,7 @@ int wonde_percent(__attribute__((unused))va_list list)
  * @list: list of arguments
  * Return: Will return the amount of characters printed.
  */
-int wonde_integer(va_list list)
+int print_integer(va_list list)
 {
 	int num_length;
 
