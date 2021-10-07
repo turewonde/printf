@@ -1,83 +1,82 @@
 #include "main.h"
-#include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
-/**
- * printer - Uses the coresponding function to print.
- * @formati: Type of element to print.
- * Return: Function address.
- **/
-int (*printer(char formati))(va_list)
-{
-	type_printer frm[] = {
-	{'c', print_c},
-	{'s', print_s},
-	{'i', print_i},
-	{'d', print_i},
-	{'R', print_rot13},
-	{'b', print_b},
-	{'r', print_r},
-	{'S', print_S},
-	{'p', print_p},
-	{'u', print_u},
-	{'x', print_x},
-	{'X', print_X},
-	{'o', print_o},
-	{'\0', NULL}
-	};
-	int i = 0;
 
-	for (i = 0; frm[i].c; i++)
-	{
-		if (formati == frm[i].c)
-			break;
-	}
-	return (frm[i].f);
-}
 /**
- * _printf - a function that produces output according to a format
- * @format: character string
- * Return: 0 success
+ * check_for_specifiers - checks if there is a valid format specifier
+ * @format: possible format specifier
+ *
+ * Return: pointer to valid function or NULL
+ */
+static int (*check_for_specifiers(const char *format))(va_list)
+{
+	unsigned int i;
+	print_t p[] = {
+		{"c", print_c},
+		{"s", print_s},
+		{"i", print_i},
+		{"d", print_d},
+		{"u", print_u},
+		{"b", print_b},
+		{"o", print_o},
+		{"x", print_x},
+		{"X", print_X},
+		{"p", print_p},
+		{"S", print_S},
+		{"r", print_r},
+		{"R", print_R},
+		{NULL, NULL}
+	};
+
+	for (i = 0; p[i].t != NULL; i++)
+	{
+		if (*(p[i].t) == *format)
+		{
+			break;
+		}
+	}
+	return (p[i].f);
+}
+
+/**
+ * _printf - prints anything
+ * @format: list of argument types passed to the function
+ *
+ * Return: number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	va_list arg;
-	int i = 0, p_counter = 0;
+	unsigned int i = 0, count = 0;
+	va_list valist;
 	int (*f)(va_list);
 
-	if (!format || (format[0] == '%' && format[1] == '\0'))
+	if (format == NULL)
 		return (-1);
-	va_start(arg, format);
-	for (; format && format[i]; i++)
+	va_start(valist, format);
+	while (format[i])
 	{
-		if (format[i] == '%')
+		for (; format[i] != '%' && format[i]; i++)
 		{
-			if (format[i + 1] == '%')
-			{
-				_putchar(format[i]);
-			    i++;
-				p_counter++;
-			}
-			else if (format[i + 1] == '\0')
-			{
-				_putchar(format[i]);
-				p_counter++;
-				return (p_counter);
-			}
-			else
-			{
-				f = printer(format[i + 1]);
-				if (f != NULL)
-				{
-					p_counter += f(arg);
-					i++;
-				}
-				else
-				{
-					_putchar(format[i]);
-					p_counter++;	}	}	}
+			_putchar(format[i]);
+			count++;
+		}
+		if (!format[i])
+			return (count);
+		f = check_for_specifiers(&format[i + 1]);
+		if (f != NULL)
+		{
+			count += f(valist);
+			i += 2;
+			continue;
+		}
+		if (!format[i + 1])
+			return (-1);
+		_putchar(format[i]);
+		count++;
+		if (format[i + 1] == '%')
+			i += 2;
 		else
-		{	_putchar(format[i]);
-			p_counter++;	}	}
-	va_end(arg);
-	return (p_counter);	}
+			i++;
+	}
+	va_end(valist);
+	return (count);
+}
